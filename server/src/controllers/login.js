@@ -1,6 +1,7 @@
 import { userModel } from "../models/userModel.js";
 import { cartModel } from "../models/cartModel.js";
 import { comparePassword } from "../utils/utils.js";
+import { generateToken } from "../utils/auth.js";
 import jwt from "jsonwebtoken";
 
 export class loginController {
@@ -20,17 +21,8 @@ export class loginController {
         message: "Usuario o contraseña incorrectos",
       });
     } else {
-      // jwt.sign({dato}, 'key', {expiresIn: '1h'})
-      const token = jwt.sign(
-        {
-          userId: user._id,
-          email: user.email
-        },
-        process.env.SECRET_KEY,
-        {
-          expiresIn: "1h",
-        }
-      );
+      // jwt.sign({objeto con datos}, 'Secretkey', {expiresIn: '1h'})
+     const token = generateToken(user);
 
       res.send({
         status: "success",
@@ -50,19 +42,7 @@ export class loginController {
       }
     });
   }
+
+
 }
 
-// static async session(req, res) {
-
-//     if (req.session.user) {
-//         res.send({status:"success",message:`Sesión iniciada con el usuario: ${req.session.user.name}`,user:req.session.user});
-//     } else {
-//         res.send({status:"error",message:"Sesión no iniciada"});
-//     }
-// }
-
-// delete user.password;
-// req.session.user = user;
-// req.session.admin = true;
-
-// res.send({ status: "success", message: "Sesión iniciada con éxito" });
