@@ -5,13 +5,13 @@ import dotenv from "dotenv";
 import productRouter from "./src/routes/products.js";
 import cartRouter from "./src/routes/cart.js";
 import usersRouter from "./src/routes/users.js";
-// import loginRouter from "./src/routes/login.js";
 import authRouter from "./src/routes/auth.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
 import { createRoles } from "./src/utils/initialSetup.js";
 const PORT = process.env.PORT ?? 8080;
+
 
 const app = express();
 
@@ -52,7 +52,8 @@ app.get("/", (req, res) => {
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => {console.log("MongoDB connected in Rossi Shopping App"), createRoles()})
+  .then(() => {console.log("MongoDB connected in Rossi Shopping App"),
+     createRoles()})
   .catch((err) => {
     if (err) {
       console.log("Happened an error while connecting to MongoDB", err);

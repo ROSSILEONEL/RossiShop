@@ -4,10 +4,12 @@ import { comparePassword } from "../utils/utils.js";
 import jwt from "jsonwebtoken";
 
 export class loginController {
+ 
+ 
   static async signIn(req, res) {
     const { email, password } = req.body;
 
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email }).populate("roles");
 
     
     if (user.length < 1) {
@@ -39,7 +41,7 @@ export class loginController {
       });
     }
   }
-
+ 
   static async logout(req, res) {
     req.session.destroy((error) => {
       if (!error) {
