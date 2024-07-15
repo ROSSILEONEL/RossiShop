@@ -1,13 +1,26 @@
-import { NavLink } from "react-router-dom"
+import './navbar.css'
+export const NavBar=()=>{
+  return(
+    <div className="container">
+      <div className="logo">
+        🌑🌒🌓🌔🌕🌖🌗🌘
+      </div>
+      <input className='search' type="text" placeholder="Celulares, Buzos, Zapatillas ..." />
+      <div className="user">
+        <div className="div-icon">
+          <button className='icon'>
 
-export const NavBar = () => {
-  return (
-    <nav className="menu">
-        <NavLink to="/">Home</NavLink>
-        <NavLink className={({isActive})=>isActive?'active':''} to="/Header">Header</NavLink>
-        <NavLink className={({isActive})=>isActive?'active':''} to="/Productos">Productos</NavLink> 
-        <NavLink className={({isActive})=>isActive?'active':''} to="/About">About</NavLink>
-        <NavLink className={({isActive})=>isActive?'active':''} to="/Servicios">Servicios</NavLink>
-    </nav>
+          👤
+          </button>
+          </div>
+<span>Mi cuenta</span>
+      </div>
+      <div className="cart">
+        <button>
+
+        🛒
+        </button>
+      </div>
+    </div>
   )
 }

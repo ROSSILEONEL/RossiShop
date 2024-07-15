@@ -1,0 +1,29 @@
+.container{
+    background-color: black;
+    padding: 10px;
+    display: flex;
+    min-width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    width: 20%;
+}
+.search{
+    width: 35rem;
+    height: 2.5rem;
+    
+}
+.icon{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px gray solid;
+}
+  
+    
+.cart{
+    width: 20%;
+
+}

@@ -11,3 +11,17 @@ body{
   min-height: 100vh;
 }
 
+.menu{
+  display: flex;
+  background-color: rgb(216, 207, 81);
+  align-items: center;
+  justify-content: flex-end;
+  gap:.5rem ;
+  padding: 8px;
+  min-width: 100%;
+min-height: 3rem;
+text-decoration: none;
+}
+a:link, a:visited, a:active {
+  text-decoration: none;
+}
