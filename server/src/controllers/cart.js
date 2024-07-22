@@ -5,24 +5,54 @@ export class CartController {
 
   static async getCart(req, res) {
     // const {id}= req.query;
-    const { id } = req.params;
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log(req.params);
+    console.log(req.params.id);
+
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('ACA PASO');
+    console.log('id----------');
+    // const { id } = req.params;
     //verifico que hay en la cookie 
-    if(!id){
-      res.status(404).send("No existe el carrito");
+    if(!req.params.id){
+      res.status(404).send("No existe el carrito, Ingrese un id");
     }
-    const cart = await cartModel.find({ userId: id });
+    const cart = await cartModel.findOne({ userId: req.params.id }).populate("items.productId");
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    console.log(cart);
+    console.log(typeof cart);
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
     if (!cart) {
       res.send("No hay carrito");
     } else {
-     res.cookie("cart", JSON.stringify(cart), { maxAge: 60 * 60 * 1000, signed: true });
+    //  res.cookie("cart", JSON.stringify(cart), { maxAge: 60 * 60 * 1000, signed: true });
     
-     res.cookie("userId", JSON.stringify(id), { maxAge: 60 * 60 * 1000, signed: true });
+    //  res.cookie("userId", JSON.stringify(req.params.id), { maxAge: 60 * 60 * 1000, signed: true });
       res.status(200).send(cart);
     }
   }
   
   static async addToCart(req, res) {
     const { userId, productId, quantity } = req.body;
+    console.log("userId:", userId, "productId:", productId, "quantity:", quantity);
     try {
       // cargar el carrito
       const cart = await cartModel
@@ -42,7 +72,7 @@ export class CartController {
           items: [
             {
               productId: productId,
-              quantity: qt,
+              quantity: quantity,
             },
           ],
           totalAmount: 0,

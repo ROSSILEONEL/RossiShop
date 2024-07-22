@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const cartCollection = 'cart';
+const cartCollection = 'carts';
 
 
 

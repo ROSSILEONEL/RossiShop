@@ -9,12 +9,18 @@ export class loginController {
  
   static async signIn(req, res) {
     const { email, password } = req.body;
-
+    console.log(email, password);
+    console.log(email, password);
+    console.log(email, password);
     const user = await userModel.findOne({ email }).populate("roles");
-
+    console.log(user);
+    console.log(user);
+    console.log(user);
+    console.log(user);
     
-    if (user.length < 1) {
-      res.send({ status: "error", message: "Usuario no encontrado" });
+    if (user==null) {
+    // if (!user) {
+     return res.send({ status: "error", message: "Usuario no encontrado" });
     }
     const isMatch = comparePassword(password, user);
     if (!isMatch) {
@@ -28,6 +34,7 @@ export class loginController {
 
       res.send({
         status: "success",
+        user: user,
         message: "Sesión iniciada con válido",
         token: token,
       });
