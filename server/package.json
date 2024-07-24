@@ -24,6 +24,7 @@
     "mongo-store": "^0.0.2",
     "mongodb": "^6.6.1",
     "mongoose": "^8.3.5",
+    "morgan": "^1.10.0",
     "standard": "^17.1.0"
   },
   "devDependencies": {

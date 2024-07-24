@@ -1,16 +1,8 @@
-// export function auth(req, res, next) {
-//     if (req.session?.user === 'nombreUsuario' && req.session?.admin === true) {
-//         return next();
-//     } else {
-//         res.send({status:"error",message:"Sesión no iniciada"});
-//     }
-// }
-
-
 
 import jwt from 'jsonwebtoken';
 
 export const generateToken = (user) => {
+          // jwt.sign({objeto con datos}, 'Secretkey', {expiresIn: '1h'})
     const token = jwt.sign(
         {
             userId: user._id,

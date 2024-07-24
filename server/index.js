@@ -10,14 +10,15 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
 import { createRoles } from "./src/utils/initialSetup.js";
+import morgan from "morgan";
 const PORT = process.env.PORT ?? 8080;
 
 
 const app = express();
-
+app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser('secretCode'));
 app.use(
   session({
     secret: "secretCode",

@@ -5,41 +5,15 @@ export class CartController {
 
   static async getCart(req, res) {
     // const {id}= req.query;
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log(req.params);
-    console.log(req.params.id);
 
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('ACA PASO');
-    console.log('id----------');
+    
     // const { id } = req.params;
-    //verifico que hay en la cookie 
+
     if(!req.params.id){
       res.status(404).send("No existe el carrito, Ingrese un id");
     }
     const cart = await cartModel.findOne({ userId: req.params.id }).populate("items.productId");
-    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    console.log(cart);
-    console.log(typeof cart);
-    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+
     if (!cart) {
       res.send("No hay carrito");
     } else {

@@ -1,40 +1,55 @@
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext.jsx";
 
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icons.jsx";
-import { UserContext } from "../context/UserContext.jsx";
+import { useState, useEffect } from "react";
 
-export const Cart = () => {
-  const cart = useContext(CartContext);
-  const { user } = useContext(UserContext);
-  const { data, error, loading } = useContext(CartContext);
-  if (!user) {
-    return <h1>Please Login</h1>;
-  }
+import {useGetCartQuery} from "../service/api"
 
-  const listItems = cart.data.items;
-  return (
-    <>
-      <h1>Cart</h1>
-      {error && <h2>{error}</h2>}
-      {loading && <h2>Loading...</h2>}
-      {/* {listItems && listItems.map(item=>console.log(item))} */}
-      {listItems &&
-        listItems.map((item) => {
-          return (
-            <>
-              <h2 key={item._id}>{item.productId.name}</h2>
-              <h2>{item.productId.description}</h2>
-              <h2>{item.quantity}</h2>
-              <h2>{item.productId.price}</h2>
 
-              <button> {<RemoveFromCartIcon />}</button>
-                
-            </>
-          );
-        })}
 
-      <h2>{JSON.stringify(data)}</h2>
-    </>
-  );
-};
+   
+  export const Cart = () => {
+    const [user, setUser] = useState(null);
+    const { data, error, loading } = useGetCartQuery(user?._id);
+  
+    useEffect(() => {
+      const userStorage = localStorage.getItem("user");
+      if (userStorage===undefined) {
+        // setUser(JSON.parse(userStorage));
+        console.log(userStorage);
+        console.log(' es undefined');
+      }
+    }, []);
+  
+    if (!user) {
+      return <h1>Please Login</h1>;
+    }
+  
+    return (
+      <>
+        <h1>Cart</h1>
+        <ul>
+          {loading && <h3>Loading...</h3>}
+          {error && <h2>{error.message}</h2>}
+          {data &&
+            data.items.map((item) => (
+              <li key={item._id}>
+                <img src={item.productId.name} alt="" />
+                <h3>Name: {item.productId.name}</h3>
+                <p>Detail: {item.productId.description}</p>
+                <p>Price: {item.productId.price}</p>
+                <p>In Cart: {item.quantity}</p>
+                <p>Stock: {item.productId.stock}</p>
+                <div>
+                  <button className="cart-btn">
+                    <AddToCartIcon />
+                  </button>
+                  <button className="cart-btn">
+                    <RemoveFromCartIcon />
+                  </button>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </>
+    );
+  };

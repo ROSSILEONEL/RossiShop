@@ -1,83 +1,88 @@
-import {useState } from "react";
-import { useContext } from 'react'
-import { UserContext } from '../context/UserContext'
-import { CartContext } from '../context/CartContext'
-
-
+import {  useState , useEffect } from "react";
+import { useSignInMutation } from "../service/api";
 
 
 
 export const Login = () => {
-     const [email, setEmail] = useState('')
-     const [password, setPassword] = useState('')
-     const [form, setForm] = useState(null)
-    
-     const {setUserId} = useContext(CartContext)
-     const {user,setUser} = useContext(UserContext)
-     
-         const getData = async() => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [form, setForm] = useState(null);
+const[user,setUser]=useState(null)
 
-            try {
-                const formLogin = {email:email, password:password}
-                 const data = await fetch('http://localhost:8080/auth/signIn',
-                     {method: 'POST',
-                      body: JSON.stringify(formLogin), 
-                      headers: {'Content-Type': 'application/json'}
-                    })   
-                 const dataJson = await data.json()
-                 if(dataJson.status ==='success'){
-                    const userId= dataJson.user._id
-                 setUserId(userId)
-                 setForm(dataJson)
-                 setUser(dataJson.user)
-                setEmail('')
-                setPassword('')}
-                localStorage.setItem('user', JSON.stringify(dataJson.user))
-                 console.log('form:------------------------');
-                 console.log(form);
-                 console.log('form:------------------------');
-                console.log(dataJson);
-               
-                
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        
+//   const [signIn,{data}] = useSignInMutation({
+//     "email": "egypcian_god@gmail.com",
+//     "password": "password"
+// });
+
+const [signIn, { data, isError, isLoading }] =  useSignInMutation();
+  
+useEffect( ()=>{
+  async function log() {
+      if (!form) return;
+    try {
+       const dataUser = await signIn(form)
+
+       setUser(dataUser)
+       setUser(signIn(form))
        
-        
-        
-        
-        
-        const handleSubmit = (e) => {
-            e.preventDefault()
-            console.log('email:',email, 'password:',password);
-            setForm({email:email, password:password})
-            getData()
-            
-           
+      } catch (error) {
+     console.log(error);   
+      }
+    }
+ 
+log(form)
+    
+  }, [form]);
 
-}
+    
 
-if (user){
-    return (
-        <>
-        <h1>Logged in</h1>
-        <p>Welcome {user.name}</p>
-        </>
-    )}    
-return (
-        <>
+    
+    const handleSubmit =  (e) => {
+        e.preventDefault();
+        console.log("email:", email, "password:", password);
+        setForm({ email:email, password:password });
         
-        <form action="/login" method="post">
-            <label htmlFor="email">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} name="email" id="email" required />
-            <label htmlFor="password">Password</label>
+    }
 
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" id="password" required />
-            <input type="submit" onClick={handleSubmit} value="Login" id="submit"   />
-        </form>
-        </>
+ 
 
-    )
-}
+      if (data) {
+       
+        return (
+          <>
+            <h1>Logged in</h1>
+            <p>Welcome {''}</p>
+          </>
+        );
+      }else{
+        localStorage.setItem("user", 'ningun usuario');
+      }
+
+      return (
+    <>
+      <form action="/login" method="post">
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          id="email"
+          required
+          />
+        <label htmlFor="password">Password</label>
+
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          id="password"
+          required
+          />
+        <input type="submit" onClick={handleSubmit} value="Login" id="submit" />
+      </form>
+    </>
+  )
+  
+};
