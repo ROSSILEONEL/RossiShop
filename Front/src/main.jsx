@@ -2,22 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import CartProvider from './context/CartContext.jsx'
-import UserProvider from './context/UserContext.jsx'
-import {ApiProvider} from '@reduxjs/toolkit/query/react'
-import {apiSlice} from './service/api.js'
+import { Provider } from 'react-redux';
+// import {apiSlice} from './service/api.js'
+import { store } from './service/config.js'
 
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <UserProvider>
 
-    <CartProvider>
-    <ApiProvider api={apiSlice}>
+    <Provider store={store}>
     <App />
-    </ApiProvider>
-    </CartProvider>
-    </UserProvider>
+    </Provider>
+   
+ 
   </React.StrictMode>
 )

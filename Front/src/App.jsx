@@ -5,6 +5,7 @@ import { Products } from './components/Products'
 import { Home } from './components/Home'
 import { Login } from './components/Login'
 import { Cart } from './components/Cart'
+import { Profile } from './components/Profile'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
@@ -21,6 +22,7 @@ function App() {
     <Route path="/products" element={<Products />} />
     <Route path='/login' element={<Login/>} />
     <Route path='/cart' element={<Cart/>} />
+    <Route path='/profile' element={<Profile/>} />
     {/* <Route path="/productos" element={<Products />} /> */}
     </Routes>
     

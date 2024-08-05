@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { loginController } from "../controllers/login.js";
+import { verifyToken } from "jsonwebtoken";
 
 
  const loginRouter = Router();
@@ -7,6 +8,7 @@ import { loginController } from "../controllers/login.js";
 loginRouter.post("/", loginController.login);
 loginRouter.get("/session", loginController.session);
 loginRouter.get("/logout", loginController.logout);
+loginRouter.get("/profile",verifyToken, loginController.profile);
 
 
 // loginRouter.get("/session", (req, res) => {

@@ -5,10 +5,7 @@ const authRouter = Router();
 
 authRouter.post("/signIn",loginController.signIn);
 authRouter.post("/logout",loginController.logout);
-authRouter.get('/admin', verifyToken, (req, res) => {
-
-    res.send({message:"admin con acceso",payload:req.user})
-})
+authRouter.get('/profile', verifyToken, loginController.profile);
 
 
 export default authRouter

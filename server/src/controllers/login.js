@@ -9,32 +9,40 @@ export class loginController {
  
  
   static async signIn(req, res) {
-    const { email, password } = req.body;
-
-    const user = await userModel.findOne({ email }).populate("roles");
  
+      const { email, password } = req.body;
+  
+      // Validación de entrada
+      if (!email || !password) {
+        return res.status(400).send({ status: "error", message: "Email y contraseña son requeridos" });
+      }
+  
+      const user = await userModel.findOne({ email }).populate("roles");
+  
+      if (!user) {
+        return res.status(404).send({ status: "error", message: "Usuario no encontrado" });
+      }
+  
+      const isMatch =  comparePassword(password, user);
+      if (!isMatch) {
+        return res.status(401).send({
+          status: "error",
+          message: "Usuario o contraseña incorrectos",
+        });
+      }
+  
+      const token = await generateToken(user);
     
-    if (user==null) {
-    // if (!user) {
-     return res.send({ status: "error", message: "Usuario no encontrado" });
-    }
-    const isMatch = comparePassword(password, user);
-    if (!isMatch) {
-      res.send({
-        status: "error",
-        message: "Usuario o contraseña incorrectos",
-      });
-    } else {
+console.log('El toquen recien creado-->', token);
 
-     const token = generateToken(user);
-    await res.cookie("token", token, { maxAge: 3600000, signed: true , httpOnly: true });
-      res.send({
+      res.cookie("token", token, { maxAge: 3600000, signed: true, httpOnly: true });
+      return res.status(200).send({
         status: "success",
-        user: user,
-        message: "Sesión iniciada con válido",
         token: token,
-      }); 
-    } 
+        user: user,
+        message: "Sesión iniciada con éxito",
+      });
+  
   }
  
   static async logout(req, res) {
@@ -46,8 +54,15 @@ export class loginController {
         res.send({ status: "error", message: "Sesión no cerrada" });
       }
     });
-  }
+  } 
 
-
+  static async profile(req, res) {
+    console.log(req.userId);
+    console.log(req.email)
+    ;
+    console.log('user');
+const user = await userModel.findById(req.userId).populate("roles");
+    res.send({message:"admin con acceso",payload:user})
 }
 
+}

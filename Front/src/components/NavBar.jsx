@@ -1,11 +1,17 @@
 import './navbar.css'
 import { NavLink } from 'react-router-dom'
 import { CartIcon } from './Icons.jsx'
-import { useContext } from 'react'
-import { UserContext } from '../context/UserContext'
+import { useSelector } from 'react-redux'
+import { authSlice } from '../redux/auth'
+
 export const NavBar=()=>{
 
-  const {user}= useContext(UserContext)
+  const auth = useSelector((state) => state[authSlice.reducerPath]);
+  console.log(auth);
+  console.log(auth);
+  console.log("auth");
+  console.log(auth);
+  console.log(auth);
   return(
     <div className="container">
       <div className="logo">
@@ -17,7 +23,7 @@ export const NavBar=()=>{
           
 
           👤
-          <NavLink to="/login">{user?user.name:'Mi cuenta'}</NavLink>
+          <NavLink to="/login">{auth.user?auth.user.name:'Mi cuenta'}</NavLink>
           </div>
 
       </div>
