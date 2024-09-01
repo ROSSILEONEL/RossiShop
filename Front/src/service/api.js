@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { setToken } from "../redux/auth";
+import { setToken,getToken } from "../redux/auth";
 
 
 // import { setToken } from '../redux/authSlice'
@@ -34,14 +34,30 @@ export const apiSlice = createApi({
   }),
   getCart: builder.query({
     query:(id)=>`/cart/${id}`,
- 
   }),
+
+    
+ 
   addToCart: builder.mutation({
     query: (data) => ({
       url: "/cart",
       method: "POST",
       body: data,
-    }),
+    }), async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      try {
+        const { data } = await queryFulfilled;
+        console.log(data);
+        console.log('API SLICE: ADD TO CART');
+        console.log('API SLICE: ADD TO CART');
+        console.log('API SLICE: ADD TO CART');
+        console.log('API SLICE: ADD TO CART');
+        
+        dispatch('');
+        // ACA VA A LA REDUX Y SETEA EL CARRITO EN EL STATE DE LA REDUX ;
+      } catch (error) {
+        console.error('Failed to sign in:', error);
+      }
+    },
 
   }),
   deleteCart: builder.mutation({

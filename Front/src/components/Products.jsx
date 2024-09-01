@@ -3,9 +3,13 @@ import "./products.css";
 import { apiSlice } from "../service/api";
 
 export const Products = () => {
-  const { useGetProductsQuery } = apiSlice;
+  const { useGetProductsQuery, useAddToCartMutation } = apiSlice;
   const { data, isError, isLoading } = useGetProductsQuery();
 
+  const [addToCart] =  useAddToCartMutation();
+
+ console.log(isError);
+ 
   return (
     <div className="products">
       <h1>Productos</h1>
@@ -20,7 +24,7 @@ export const Products = () => {
                 <p>Detail:{item.description}</p>
                 <p>Price:{item.price}</p>
                 <p>Stock:{item.stock}</p>
-                <button className="cart-btn">Add to cart</button>
+                <button className="cart-btn" onClick={()=>addToCart(item)}>Add to cart</button>
               </li>
             ))
           : ""}

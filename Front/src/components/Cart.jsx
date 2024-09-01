@@ -1,28 +1,41 @@
 
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icons.jsx";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+// import { useState, useEffect } from "react";
+
 
 import {useGetCartQuery} from "../service/api"
 
 
 
+
    
   export const Cart = () => {
-    const [user, setUser] = useState(null);
-    const { data, error, loading } = useGetCartQuery(user?._id);
-  
-    useEffect(() => {
-      const userStorage = localStorage.getItem("user");
-      if (userStorage===undefined) {
-        // setUser(JSON.parse(userStorage));
-        console.log(userStorage);
-        console.log(' es undefined');
-      }
-    }, []);
-  
-    if (!user) {
+    // const [user, setUser] = useState(null);
+const token = useSelector((state)=> state.auth.token);
+const userAuth = useSelector((state)=> state.auth.user);
+console.log(token);
+console.log(userAuth);
+
+    const userStorage = localStorage.getItem("user");
+    
+    const { data, error, loading } = useGetCartQuery(info.data.user._id);
+    if (!userStorage) {
       return <h1>Please Login</h1>;
     }
+    const info = JSON.parse(userStorage);
+    console.log('INFORMACION',info);
+    console.log('USER STORAGE', userStorage);
+    // let idProvisorio= '667f1b585ac9245940317c29'
+
+    // const { data, error, loading } = useGetCartQuery(idProvisorio);
+
+    console.log(data);
+    console.log(data);
+    console.log(data);
+    
+    
+  
   
     return (
       <>

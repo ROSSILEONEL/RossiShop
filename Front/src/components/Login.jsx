@@ -23,7 +23,7 @@ useEffect( ()=>{
        const dataUser = await signIn(form)
 
        setUser(dataUser)
-       setUser(signIn(form))
+       localStorage.setItem("user", JSON.stringify(dataUser));
        
       } catch (error) {
      console.log(error);   
